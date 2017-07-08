@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./compiled",
+    "target": "es5",
+    "sourceMap": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "declaration": true,
+    "module": "es2015",
+    "lib": [
+      "es5",
+      "dom",
+      "es2015"
+    ],
+    "baseUrl": ".",
+    "rootDir": "."
+  },
+  "include": [
+    "app/**/*.ts",
+    "spec/**/*.ts",
+    "index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "compiled",
+    "release"
+  ],
+  "angularCompilerOptions": {
+    "genDir": ".ngc"
+  }
+}
