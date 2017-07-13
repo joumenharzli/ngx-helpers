@@ -1,4 +1,4 @@
 /**
  *
  */
-export { multiply } from './src/multiply';
+export { AutoUnsubscribe } from './src/auto.unsubscribe';
