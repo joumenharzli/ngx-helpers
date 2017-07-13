@@ -16,8 +16,8 @@ describe('JWTHelper Spec', () => {
     + '.Nv4vJN1Ye8JKeizWPUG3Hj8o2R6KtekJiVdpqQ--uiU';
 
   beforeAll(() => {
-    jwtHelper = new JWTHelper();
     localStorage.setItem('id_token', token);
+    jwtHelper = new JWTHelper();
   });
 
   it('The token should be expired', () => {
@@ -25,6 +25,7 @@ describe('JWTHelper Spec', () => {
   });
 
   it('it should throw and error if token dont have an expiration property', () => {
+    jwtHelper.clearToken();
     localStorage.setItem('id_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
       + 'eyJuYW1lIjoiSm91bWVuIEhhcnpsaSJ9.IcIUU6r4suJSGgzcHNmPW-Hv4_6U0AzKJtQ4aOB-pG8');
     try {
@@ -35,6 +36,7 @@ describe('JWTHelper Spec', () => {
   });
 
   it('it should throw and error if token payload is not an object', () => {
+    jwtHelper.clearToken();
     localStorage.setItem('id_token', 'AAAABBBBCCC.DDDDD.EEEE');
     try {
       jwtHelper.getPayloadContent();
@@ -44,6 +46,7 @@ describe('JWTHelper Spec', () => {
   });
 
   it('it should throw and error if token is invalid', () => {
+    jwtHelper.clearToken();
     localStorage.setItem('id_token', 'AAAABBBBCCC');
     try {
       jwtHelper.splitToken();
@@ -53,6 +56,7 @@ describe('JWTHelper Spec', () => {
   });
 
   it('it should throw and error if no token is avaiable', () => {
+    jwtHelper.clearToken();
     localStorage.removeItem('id_token');
     try {
       jwtHelper.extractToken();

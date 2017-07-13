@@ -6,8 +6,17 @@
  * @author Joumen HARZLI
  */
 export class JWTHelper {
+
   private TOKEN_KEY: string = 'id_token';
   private EXPIRATION_PROPERTY: string = 'exp';
+  private cachedPayload: Object = {};
+
+  /**
+   * Load Payload In Memory
+   */
+  constructor() {
+    this.getPayloadContent();
+  }
 
   /**
    * Extract the token from the localStorage
@@ -40,18 +49,40 @@ export class JWTHelper {
 
   /**
    * Get the content of the payload
+   * Cache the parsed content in the memory to retrive it
+   * the next time
    *
    * @returns {any} the payload
    * @memberof JWTHelper
    */
   public getPayloadContent(): any {
+    if (Object.keys(this.cachedPayload).length > 0) {
+      return this.cachedPayload;
+    }
     const splittedToken = this.splitToken();
     const encodedPayload = splittedToken[1];
     const decodedPayload = atob(encodedPayload);
     try {
-      return JSON.parse(decodedPayload);
+      this.cachedPayload = JSON.parse(decodedPayload);
+      return this.cachedPayload;
     } catch (e) {
       throw new Error('Invalid token payload');
+    }
+  }
+
+  /**
+   * Access a property in the payload
+   *
+   * @param {string} item to load
+   * @returns {*} content of the item
+   * @memberof JWTHelper
+   */
+  public getPayloadItem(item: string): any {
+    const payload = this.getPayloadContent();
+    if (payload.hasOwnProperty(item)) {
+      return payload[item];
+    } else {
+      throw new Error(`No property named '${item}' found in the payload`);
     }
   }
 
@@ -62,14 +93,10 @@ export class JWTHelper {
    * @memberof JWTHelper
    */
   public getTokenExpirationDate(): Date {
-    const payload = this.getPayloadContent();
-    if (payload.hasOwnProperty(this.EXPIRATION_PROPERTY)) {
-      const date = new Date(0);
-      date.setUTCSeconds(payload[this.EXPIRATION_PROPERTY]);
-      return date;
-    } else {
-      throw new Error('no expiration information available');
-    }
+    const expiration = this.getPayloadItem(this.EXPIRATION_PROPERTY);
+    const date = new Date(0);
+    date.setUTCSeconds(expiration);
+    return date;
   }
 
   /**
@@ -80,5 +107,15 @@ export class JWTHelper {
    */
   public isTokenExpired(): boolean {
     return (new Date().valueOf() > this.getTokenExpirationDate().valueOf());
+  }
+
+  /**
+   * Remove token
+   *
+   * @memberof JWTHelper
+   */
+  public clearToken(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
+    this.cachedPayload = {};
   }
 }
