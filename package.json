@@ -1,6 +1,6 @@
 {
   "name": "ngx-helpers",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Collection of useful utils for building large-scale Angular applications",
   "main": "./release/ngx-helpers.min.umd.js",
   "module": "./index.js",
@@ -55,6 +55,7 @@
     "@angular/platform-browser": "^4.2.6",
     "@angular/platform-browser-dynamic": "^4.2.6",
     "@angular/platform-server": "^4.2.6",
+    "@angular/router": "^4.2.6",
     "@types/jasmine": "^2.5.53",
     "@types/node": "^8.0.9",
     "conventional-changelog-cli": "^1.3.1",
@@ -74,6 +75,8 @@
   },
   "peerDependencies": {
     "@angular/core": "^2.0.0 || ^4.0.0",
+    "@angular/http": "^2.0.0 || ^4.0.0",
+    "@angular/router": "^2.0.0 || ^4.0.0",
     "rxjs": "^5.0.0"
   }
 }

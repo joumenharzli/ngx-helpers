@@ -60,6 +60,12 @@
     tslib "^1.7.1"
     xhr2 "^0.1.4"
 
+"@angular/router@^4.2.6":
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-4.2.6.tgz#a6919d9b61c45ffc15fbee593398e3fd532dab46"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/tsc-wrapped@4.2.6":
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/@angular/tsc-wrapped/-/tsc-wrapped-4.2.6.tgz#60e44b5b38f3340ee14c54a58a7a07133c64e898"
