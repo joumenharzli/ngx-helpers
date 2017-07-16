@@ -90,7 +90,7 @@
     "no-angle-bracket-type-assertion": false,
     "no-any": false,
     "no-arg": true,
-    "no-backbone-get-set-outside-model": true,
+    "no-backbone-get-set-outside-model": false,
     "no-banned-terms": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,
