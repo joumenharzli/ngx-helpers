@@ -10,6 +10,7 @@ export class JWTHelper {
   private TOKEN_KEY: string = 'id_token';
   private EXPIRATION_PROPERTY: string = 'exp';
   private cachedPayload: Object = {};
+  private cachedToken: string = '';
 
   /**
    * Load Payload In Memory
@@ -25,11 +26,15 @@ export class JWTHelper {
    * @memberof JWTHelper
    */
   public extractToken(): string {
+    if (this.cachedToken.length > 0) {
+      return this.cachedToken;
+    }
     const token = localStorage.getItem(this.TOKEN_KEY);
     if (token === null) {
       throw new Error('No token available');
     }
-    return token;
+    this.cachedToken = token;
+    return this.cachedToken;
   }
 
   /**
@@ -115,7 +120,8 @@ export class JWTHelper {
    * @memberof JWTHelper
    */
   public clearToken(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
     this.cachedPayload = {};
+    this.cachedToken = '';
+    localStorage.removeItem(this.TOKEN_KEY);
   }
 }
