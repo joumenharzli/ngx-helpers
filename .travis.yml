@@ -28,6 +28,9 @@ before_script:
 after_failure:
   - cat /home/travis/build/joumenharzli/ngx-tools/npm-debug.log
 
+after_success:
+  - cat ./dist/coverage/lcov/lcov | ./node_modules/coveralls/bin/coveralls.js
+
 cache:
   directories: node_modules
 

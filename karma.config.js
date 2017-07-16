@@ -13,7 +13,12 @@ module.exports = function (config) {
     karmaTypescriptConfig: {
       reports:
       {
-        "html": "./dist/coverage"
+        "html": "./dist/coverage",
+        "lcovonly": {
+          "directory": "./dist/coverage",
+          "filename": "lcov",
+          "subdirectory": "lcov"
+        }
       }
     },
     singleRun: true
