@@ -152,7 +152,7 @@ export class AuthorizedHttp extends Http {
         /**
          * the api throwed an error
          */
-        const errorContent: Object = error.json().message;
+        const errorContent: Object = error.json();
         return Observable.throw(errorContent);
       } catch (e) {
         /**
