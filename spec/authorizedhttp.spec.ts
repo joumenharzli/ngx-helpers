@@ -3,8 +3,6 @@
  */
 import { Injectable, Injector, ReflectiveInjector } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthorizedHttp } from '../src/authorized.http';
-import { GenericCRUDRestService } from '../src/generic-crud-rest.service';
 import {
   TestBed, getTestBed, inject, async, fakeAsync, tick
 } from '@angular/core/testing';
@@ -16,6 +14,8 @@ import {
   ConnectionBackend
 } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+
+import { GenericCRUDRestService, AuthorizedHttp } from '../src/http';
 
 @Injectable()
 class TestService extends GenericCRUDRestService<any, string> {

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { JWTHelper } from './jwt.helper';
+import { JWTHelper } from '../jwt.helper';
 
 /**
  * Performs http requests using `XMLHttpRequest`
