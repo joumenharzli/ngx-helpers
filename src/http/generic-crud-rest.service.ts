@@ -4,6 +4,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 
+import { PaginationArgs, PaginationSortArgs, PaginationPage } from './pagination.args';
+
 /**
  * This class provides CRUD methods
  * for a http service
@@ -45,4 +47,18 @@ export class GenericCRUDRestService<T, G> {
     return this.http.get(this.apiUrl).map((response: Response) => response.json());
   }
 
+  public getAllWithPagination(paginationArgs: PaginationArgs): Observable<PaginationPage<T>> {
+    const params = new URLSearchParams();
+    params.set('size', `${paginationArgs.pageSize}`);
+    params.set('page', `${paginationArgs.pageNumber}`);
+    if (paginationArgs.sorts !== null) {
+      if (paginationArgs.sorts.length > 0) {
+        paginationArgs.sorts.forEach((sort: PaginationSortArgs) =>
+          params.set('sort', `${sort.property},${sort.direction}`)
+        );
+      }
+    }
+    return this.http.get(this.apiUrl, { search: params })
+      .map((response: Response) => response.json());
+  }
 }
