@@ -1,6 +1,6 @@
 import {
   Http, RequestOptions, Response, Request,
-  ConnectionBackend, RequestOptionsArgs, Headers, XHRBackend
+  ConnectionBackend, RequestOptionsArgs, Headers, XHRBackend, BaseRequestOptions
 } from '@angular/http';
 import { Injectable, Provider } from '@angular/core';
 import { Router } from '@angular/router';
@@ -183,9 +183,9 @@ export const AUTHORIZED_HTTP_PROVIDER: Provider = {
 export const AUTHORIZED_HTTP_PROVIDER_TEST: Provider = {
   provide: Http,
   useFactory: (backend: MockBackend,
-    options: RequestOptions,
+    options: BaseRequestOptions,
     router: Router) => {
     return new AuthorizedHttp(backend, options, router);
   },
-  deps: [MockBackend, RequestOptions, Router]
+  deps: [MockBackend, BaseRequestOptions, Router]
 };

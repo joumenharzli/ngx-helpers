@@ -2,7 +2,8 @@
  * AuthorizedHttp Tests
  */
 import { Injectable, Injector, ReflectiveInjector } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import {
   TestBed, getTestBed, inject, async, fakeAsync, tick
 } from '@angular/core/testing';
@@ -15,7 +16,7 @@ import {
 } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
-import { GenericCRUDRestService, AuthorizedHttp } from '../src/http';
+import { GenericCRUDRestService, AuthorizedHttp, AUTHORIZED_HTTP_PROVIDER_TEST } from '../src/http';
 
 @Injectable()
 class TestService extends GenericCRUDRestService<any, string> {
@@ -31,19 +32,14 @@ describe('Authorized Service & GenericCrud Spec', () => {
   const obj = { success: true };
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       providers: [
         TestService,
         MockBackend,
         BaseRequestOptions,
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend,
-            options: BaseRequestOptions,
-            injector: Injector) => {
-            return new AuthorizedHttp(backend, options, injector);
-          },
-          deps: [MockBackend, BaseRequestOptions, Injector]
-        }
+        AUTHORIZED_HTTP_PROVIDER_TEST
       ]
     });
     const token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
