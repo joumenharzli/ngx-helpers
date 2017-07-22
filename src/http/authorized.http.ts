@@ -1,8 +1,8 @@
 import {
   Http, RequestOptions, Response, Request,
-  ConnectionBackend, RequestOptionsArgs, Headers, XHRBackend, BaseRequestOptions
+  ConnectionBackend, RequestOptionsArgs, Headers, XHRBackend
 } from '@angular/http';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import { MockBackend } from '@angular/http/testing';
 import { Observable } from 'rxjs/Rx';
@@ -39,7 +39,7 @@ export class AuthorizedHttp extends Http {
    * Performs any type of http request. First argument is required, and can either be a url or
    * a {@link Request} instance. If the first argument is a url, an optional {@link RequestOptions}
    * object can be provided as the 2nd argument. The options object will be merged with the values
-   * of {@link BaseRequestOptions} before performing the request.
+   * of {@link RequestOptions} before performing the request.
    */
   public request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     return this.handleError(super.request(url, this.customizeHeaders(options)));
@@ -167,25 +167,25 @@ export class AuthorizedHttp extends Http {
 /**
  * A Provider to add in @NgModule
  */
-export const AUTHORIZED_HTTP_PROVIDER: Object = {
+export const AUTHORIZED_HTTP_PROVIDER: Provider = {
   provide: Http,
   useFactory: (backend: XHRBackend,
-    options: BaseRequestOptions,
+    options: RequestOptions,
     injector: Injector) => {
     return new AuthorizedHttp(backend, options, injector);
   },
-  deps: [XHRBackend, BaseRequestOptions, Injector]
+  deps: [XHRBackend, RequestOptions, Injector]
 };
 
 /**
  * Provider to add for Testing
  */
-export const AUTHORIZED_HTTP_PROVIDER_TEST: Object = {
+export const AUTHORIZED_HTTP_PROVIDER_TEST: Provider = {
   provide: Http,
   useFactory: (backend: MockBackend,
-    options: BaseRequestOptions,
+    options: RequestOptions,
     injector: Injector) => {
     return new AuthorizedHttp(backend, options, injector);
   },
-  deps: [MockBackend, BaseRequestOptions, Injector]
+  deps: [MockBackend, RequestOptions, Injector]
 };
