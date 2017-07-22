@@ -2,7 +2,7 @@ import {
   Http, RequestOptions, Response, Request,
   ConnectionBackend, RequestOptionsArgs, Headers, XHRBackend
 } from '@angular/http';
-import { Injectable, Injector, Provider } from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import { MockBackend } from '@angular/http/testing';
 import { Observable } from 'rxjs/Rx';
@@ -23,16 +23,22 @@ import { JWTHelper } from '../jwt.helper';
  */
 export class AuthorizedHttp extends Http {
 
-  private router: Router;
   private jwtHelper: JWTHelper;
 
   /* tslint:disable:no-reserved-keywords */
   constructor(
     private backend: ConnectionBackend,
     private defaultOptions: RequestOptions,
-    private injector: Injector) {
+    private router: Router) {
     super(backend, defaultOptions);
-    this.jwtHelper = new JWTHelper();
+    try {
+      this.jwtHelper = new JWTHelper();
+    } catch (e) {
+      /* No token is availble so we nedd one
+       * Navigate to login page
+       */
+      this.router.navigate(['login']);
+    }
   }
 
   /**
@@ -138,12 +144,6 @@ export class AuthorizedHttp extends Http {
          */
         this.jwtHelper.clearToken();
         /**
-         * Get a router instances
-         */
-        if (this.router === null) {
-          this.router = this.injector.get(Router);
-        }
-        /**
          * Navigate to login page
          */
         this.router.navigate(['login']);
@@ -171,10 +171,10 @@ export const AUTHORIZED_HTTP_PROVIDER: Provider = {
   provide: Http,
   useFactory: (backend: XHRBackend,
     options: RequestOptions,
-    injector: Injector) => {
-    return new AuthorizedHttp(backend, options, injector);
+    router: Router) => {
+    return new AuthorizedHttp(backend, options, router);
   },
-  deps: [XHRBackend, RequestOptions, Injector]
+  deps: [XHRBackend, RequestOptions, Router]
 };
 
 /**
@@ -184,8 +184,8 @@ export const AUTHORIZED_HTTP_PROVIDER_TEST: Provider = {
   provide: Http,
   useFactory: (backend: MockBackend,
     options: RequestOptions,
-    injector: Injector) => {
-    return new AuthorizedHttp(backend, options, injector);
+    router: Router) => {
+    return new AuthorizedHttp(backend, options, router);
   },
-  deps: [MockBackend, RequestOptions, Injector]
+  deps: [MockBackend, RequestOptions, Router]
 };
