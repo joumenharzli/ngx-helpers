@@ -1,6 +1,6 @@
 {
   "name": "ngx-helpers",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Collection of useful utils for building large-scale Angular applications",
   "main": "./release/ngx-helpers.min.umd.js",
   "module": "./index.js",
