@@ -36,8 +36,19 @@ export interface PaginationSortArgs {
  * @see http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/domain/Sort.Direction.html
  */
 export enum PaginationSortOrderType {
-  ASC = 'ASC',
-  DESC = 'DESC'
+  ASC,
+  DESC
+}
+
+/**
+ * Convert Order Type to String
+ *
+ * @param sortType type of sort
+ * @return a string value of type
+ * @author Joumen HARZLI
+ */
+export function paginationSortOrderTypeToString(sortType: PaginationSortOrderType): string {
+  return (sortType === PaginationSortOrderType.ASC) ? 'ASC' : 'DESC';
 }
 
 /**

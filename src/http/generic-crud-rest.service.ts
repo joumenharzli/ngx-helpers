@@ -4,7 +4,10 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 
-import { PaginationArgs, PaginationSortArgs, PaginationPage } from './pagination.args';
+import {
+  PaginationArgs, PaginationSortArgs,
+  PaginationPage, paginationSortOrderTypeToString
+} from './pagination.args';
 
 /**
  * This class provides CRUD methods
@@ -54,7 +57,7 @@ export class GenericCRUDRestService<T, G> {
     if (paginationArgs.sorts !== null) {
       if (paginationArgs.sorts.length > 0) {
         paginationArgs.sorts.forEach((sort: PaginationSortArgs) =>
-          params.set('sort', `${sort.property},${sort.direction}`)
+          params.set('sort', `${sort.property},${paginationSortOrderTypeToString(sort.direction)}`)
         );
       }
     }
